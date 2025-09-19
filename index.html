@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCT Sleep Wellness Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Navigation Logo -->
+    <div class="nav-logo" onclick="goToHome()">
+        <img src="images/bct-logo.png" alt="BCT Logo" class="nav-logo-img">
+    </div>
+
+    <!-- Social Media Links -->
+    <div class="social-media-links">
+        <a href="https://facebook.com" target="_blank" class="social-link facebook" title="Follow us on Facebook">📘</a>
+        <a href="https://instagram.com" target="_blank" class="social-link instagram"
+            title="Follow us on Instagram">📷</a>
+        <a href="https://tiktok.com" target="_blank" class="social-link tiktok" title="Follow us on TikTok">🎵</a>
+        <a href="https://twitter.com" target="_blank" class="social-link twitter" title="Follow us on Twitter">🐦</a>
+    </div>
+
+    <!-- Sleep Quiz Popup -->
+    <div id="sleepQuizPopup" class="quiz-popup">
+        <div class="quiz-content">
+            <span class="quiz-close" onclick="closeQuiz()">&times;</span>
+            <h3>🛏️ Quick Sleep Assessment</h3>
+            <div class="quiz-questions">
+                <div class="quiz-question active" id="question1">
+                    <p><strong>Do you snore loudly?</strong></p>
+                    <div class="quiz-options">
+                        <button class="quiz-btn" onclick="answerQuestion(1, 'never')">Never</button>
+                        <button class="quiz-btn" onclick="answerQuestion(1, 'rarely')">Rarely</button>
+                        <button class="quiz-btn" onclick="answerQuestion(1, 'sometimes')">Sometimes</button>
+                        <button class="quiz-btn" onclick="answerQuestion(1, 'often')">Often</button>
+                    </div>
+                </div>
+                <div class="quiz-question" id="question2">
+                    <p><strong>How often do you feel tired during the day?</strong></p>
+                    <div class="quiz-options">
+                        <button class="quiz-btn" onclick="answerQuestion(2, 'never')">Never</button>
+                        <button class="quiz-btn" onclick="answerQuestion(2, 'rarely')">Rarely</button>
+                        <button class="quiz-btn" onclick="answerQuestion(2, 'sometimes')">Sometimes</button>
+                        <button class="quiz-btn" onclick="answerQuestion(2, 'often')">Often</button>
+                    </div>
+                </div>
+                <div class="quiz-question" id="question3">
+                    <p><strong>Do you have trouble falling asleep?</strong></p>
+                    <div class="quiz-options">
+                        <button class="quiz-btn" onclick="answerQuestion(3, 'never')">Never</button>
+                        <button class="quiz-btn" onclick="answerQuestion(3, 'rarely')">Rarely</button>
+                        <button class="quiz-btn" onclick="answerQuestion(3, 'sometimes')">Sometimes</button>
+                        <button class="quiz-btn" onclick="answerQuestion(3, 'often')">Often</button>
+                    </div>
+                </div>
+            </div>
+            <div class="quiz-results" id="quizResults" style="display: none;">
+                <h4>Your Sleep Assessment Results</h4>
+                <p id="resultsText"></p>
+                <button class="btn" onclick="closeQuiz()">Continue to App</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-logo">
+                <img src="images/bct-logo.png" alt="Baguio College of Technology Logo" class="logo">
+                <!-- <div class="logo-placeholder">BCT</div> -->
+            </div>
+            <h1>🌙 Baguio College of Technology Sleep Wellness Hub</h1>
+            <p class="subtitle">Better Sleep, Better Grades, Better Life for BCT Students</p>
+        </header>
+
+        <!-- User Info Section -->
+        <div class="user-info-section">
+            <div class="user-inputs">
+                <div class="input-group">
+                    <label for="ageRange">Your Age Range:</label>
+                    <select id="ageRange">
+                        <option value="">Select Age Range</option>
+                        <option value="16-18">16-18 years</option>
+                        <option value="19-21">19-21 years</option>
+                        <option value="22-24">22-24 years</option>
+                        <option value="25+">25+ years</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="sleepTime">When do you usually sleep?</label>
+                    <select id="sleepTime">
+                        <option value="">Select Time</option>
+                        <option value="night">Night (Regular Schedule)</option>
+                        <option value="day">Day (Shift Work/Special Schedule)</option>
+                        <option value="irregular">Irregular Schedule</option>
+                    </select>
+                </div>
+                <button class="btn search-btn" onclick="searchPersonalizedTips()">🔍 Get Personalized Tips</button>
+            </div>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="table-of-contents">
+            <h3>📚 Navigation Menu</h3>
+            <div class="toc-links">
+                <a href="#tracker" class="toc-link" onclick="showTab('tracker')">🛏️ Sleep Tracker</a>
+                <a href="#tips" class="toc-link" onclick="showTab('tips')">🧠 Sleep Solutions</a>
+                <a href="#motivation" class="toc-link" onclick="showTab('motivation')">🌟 Daily Motivation</a>
+                <a href="#analysis" class="toc-link" onclick="showTab('analysis')">📊 Sleep Analysis</a>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-tab="tracker">Sleep Tracker</button>
+            <button class="tab-btn" data-tab="tips">Sleep Solutions</button>
+            <button class="tab-btn" data-tab="motivation">Daily Motivation</button>
+            <button class="tab-btn" data-tab="analysis">Sleep Analysis</button>
+        </div>
+
+        <div id="tracker" class="tab-content active">
+            <div class="card">
+                <h3>🛏️ Track Your Sleep Tonight</h3>
+                <div class="sleep-tracker">
+                    <div class="tracker-input">
+                        <label>Bedtime</label>
+                        <input type="time" id="bedtime" value="22:00">
+                    </div>
+                    <div class="tracker-input">
+                        <label>Wake-up Time</label>
+                        <input type="time" id="wakeup" value="06:00">
+                    </div>
+                    <div class="tracker-input">
+                        <label>Sleep Quality</label>
+                        <select id="quality">
+                            <option value="excellent">Excellent (Refreshed)</option>
+                            <option value="good">Good (Well-rested)</option>
+                            <option value="fair">Fair (Okay)</option>
+                            <option value="poor">Poor (Tired)</option>
+                        </select>
+                    </div>
+                    <div class="tracker-input">
+                        <label>Study Hours Before Bed</label>
+                        <input type="number" id="studyhours" min="0" max="12" value="2">
+                    </div>
+                </div>
+
+                <div class="mood-selector">
+                    <p style="width: 100%; text-align: center; margin-bottom: 10px; font-weight: 600;">How do you feel
+                        right now?</p>
+                    <button class="mood-btn" data-mood="😴">😴</button>
+                    <button class="mood-btn" data-mood="😊">😊</button>
+                    <button class="mood-btn" data-mood="😐">😐</button>
+                    <button class="mood-btn" data-mood="😩">😩</button>
+                    <button class="mood-btn" data-mood="😵">😵</button>
+                </div>
+
+                <button class="btn" id="logSleepBtn">Log My Sleep</button>
+            </div>
+
+            <div class="card sleep-stats" id="sleepStats">
+                <div class="stat-card">
+                    <div class="stat-value" id="avgSleep">8.0h</div>
+                    <div>Average Sleep</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="sleepStreak">3</div>
+                    <div>Day Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalNights">12</div>
+                    <div>Nights Tracked</div>
+                </div>
+            </div>
+
+            <div class="card sleep-quality-indicator">
+                <h3>Your Sleep Quality Trend</h3>
+                <div id="qualityIndicator">
+                    <div class="quality-circle quality-good">Good</div>
+                </div>
+                <p>Keep up the good work! Your sleep quality is improving.</p>
+            </div>
+        </div>
+
+        <div id="tips" class="tab-content">
+            <div class="card">
+                <h3>🧠 Psychological Sleep Solutions</h3>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>🌅 Sleep Hygiene</h4>
+                        <p>Create a consistent bedtime routine. Your brain loves predictability. Try the "3-2-1 rule": 3
+                            hours before bed, no more food. 2 hours before, no more work. 1 hour before, no more
+                            screens.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>🧘 Relaxation Techniques</h4>
+                        <p>Practice the 4-7-8 breathing technique: Inhale for 4 counts, hold for 7, exhale for 8. This
+                            activates your parasympathetic nervous system and prepares your body for sleep.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>💭 Cognitive Restructuring</h4>
+                        <p>Challenge negative thoughts about sleep. Instead of "I'll fail tomorrow if I don't sleep,"
+                            try "I can function well even with less sleep, and tomorrow will be fine."</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>📱 Digital Detox</h4>
+                        <p>Blue light suppresses melatonin. Use apps like f.lux or enable night mode. Better yet, keep
+                            your phone in another room and use a traditional alarm clock.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>🎯 Study Schedule Optimization</h4>
+                        <p>Use the Pomodoro Technique: 25 minutes study, 5-minute break. Schedule intense study sessions
+                            earlier in the day. Your brain needs wind-down time.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>🌡️ Environment Control</h4>
+                        <p>Keep your room cool (65-68°F), dark, and quiet. Consider blackout curtains, earplugs, or a
+                            white noise machine. Your environment significantly impacts sleep quality.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>⚡ Quick Sleep Hacks for Students</h3>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>🍵 Strategic Caffeine Use</h4>
+                        <p>No caffeine after 2 PM. Try green tea in the morning for sustained energy without the crash.
+                            Consider L-theanine supplements to reduce caffeine anxiety.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>💪 Power Naps</h4>
+                        <p>20-minute power naps between 1-3 PM can boost alertness. Any longer and you'll enter deep
+                            sleep, making you groggier. Set an alarm!</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>📝 Worry Journal</h4>
+                        <p>Spend 5 minutes before bed writing down tomorrow's tasks and worries. This "brain dump" helps
+                            prevent racing thoughts when your head hits the pillow.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="motivation" class="tab-content">
+            <div class="quote-card" id="dailyQuote">
+                <div class="quote-text">The best bridge between despair and hope is a good night's sleep.</div>
+                <div class="quote-author">- E.B. White</div>
+            </div>
+
+            <div class="card">
+                <h3>🌟 Your Sleep Success Journey</h3>
+                <p style="margin-bottom: 15px;">Sleep Quality Goal Progress</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 65%"></div>
+                </div>
+                <p style="text-align: center; margin-top: 10px;">65% - You're doing great! Keep building those healthy
+                    habits.</p>
+            </div>
+
+            <div class="card">
+                <h3>💪 Daily Affirmations for Better Sleep</h3>
+                <div style="text-align: center; padding: 20px;">
+                    <p id="affirmation"
+                        style="font-size: 1.3rem; font-style: italic; color: #667eea; margin-bottom: 20px;">
+                        "I deserve rest and my body knows how to sleep naturally."
+                    </p>
+                    <button class="btn" id="newAffirmationBtn">New Affirmation</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🎯 Sleep Challenge of the Week</h3>
+                <p><strong>This Week's Challenge:</strong> Go to bed at the same time every night for 7 days straight.
+                </p>
+                <p><strong>Reward:</strong> Notice how much more energized you feel for your classes and projects!</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 43%"></div>
+                </div>
+                <p style="text-align: center; margin-top: 10px;">Day 3/7 - You're building momentum!</p>
+            </div>
+        </div>
+
+        <div id="analysis" class="tab-content">
+            <div class="card">
+                <h3>📊 Your Sleep Insights</h3>
+                <div id="sleepAnalysis">
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <h4>📈 Weekly Trends</h4>
+                            <p><strong>Best Sleep Day:</strong> Sunday (8.2 hours average)<br>
+                                <strong>Worst Sleep Day:</strong> Wednesday (5.8 hours average)<br>
+                                <strong>Recommendation:</strong> Plan lighter study loads on Wednesday evenings.
+                            </p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>🎓 Study Impact</h4>
+                            <p><strong>Optimal Study Hours:</strong> 2-3 hours before bed<br>
+                                <strong>Sleep Quality:</strong> Decreases with 4+ study hours<br>
+                                <strong>Tip:</strong> Try distributed practice instead of cramming.
+                            </p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>😴 Mood Patterns</h4>
+                            <p><strong>Best Mood Days:</strong> After 7+ hours of sleep<br>
+                                <strong>Energy Crashes:</strong> Happen with <6 hours<br>
+                                    <strong>Sweet Spot:</strong> 7.5-8.5 hours for optimal BCT performance.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🎯 Personalized Recommendations</h3>
+                <div class="tip-card" style="border-left-color: #10b981;">
+                    <h4>✅ What's Working Well</h4>
+                    <p>• You maintain consistent wake-up times<br>
+                        • Your weekend sleep recovery is effective<br>
+                        • You're tracking regularly (great habit!)</p>
+                </div>
+                <div class="tip-card" style="border-left-color: #f59e0b;">
+                    <h4>⚠️ Areas for Improvement</h4>
+                    <p>• Try going to bed 30 minutes earlier on weekdays<br>
+                        • Reduce screen time 1 hour before bed<br>
+                        • Consider a brief meditation before sleep</p>
+                </div>
+                <div class="tip-card" style="border-left-color: #3b82f6;">
+                    <h4>🎯 This Week's Focus</h4>
+                    <p><strong>Goal:</strong> Achieve 7+ hours of sleep for 5 out of 7 nights<br>
+                        <strong>Strategy:</strong> Set a bedtime alarm 1 hour before your target bedtime<br>
+                        <strong>Reward:</strong> Better focus for your BCT projects and exams!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Developer: Clark Derick C. Tablac -->
+    <!-- ADD NECESSARY INFORMATION HERE WHEN OFFICIALLY PUBLISHED -->
+    <footer class="developer-credit">
+        <div class="credit-content">
+            <p class="credit-text">
+                Developed with ❤️ by
+                <a href="mailto:clark.tablac@example.com" class="developer-link" title="Contact Developer">
+                    Clark Ware <br> Inspired by: AntZaiVirus
+                </a>
+            </p>
+            <p class="credit-subtitle">BCT Sleep Wellness Hub © 2025</p>
+        </div>
+    </footer>
+
+    <!-- END -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
